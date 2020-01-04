@@ -10,6 +10,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import org.wit.hillfort.helpers.checkLocationPermissions
 import org.wit.hillfort.helpers.createDefaultLocationRequest
 import org.wit.hillfort.helpers.isPermissionGranted
@@ -45,7 +47,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     @SuppressLint("MissingPermission")
     fun doSetCurrentLocation() {
         locationService.lastLocation.addOnSuccessListener {
-            locationUpdate(it.latitude, it.longitude)
+            locationUpdate(Location(it.latitude, it.longitude))
         }
     }
 
@@ -55,7 +57,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
             override fun onLocationResult(locationResult: LocationResult?) {
                 if (locationResult != null && locationResult.locations != null) {
                     val l = locationResult.locations.last()
-                    locationUpdate(l.latitude, l.longitude)
+                    locationUpdate(Location(l.latitude, l.longitude))
                 }
             }
         }
@@ -72,29 +74,28 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
         if (isPermissionGranted(requestCode, grantResults)) {
             doSetCurrentLocation()
         } else {
-            locationUpdate(defaultLocation.lat, defaultLocation.lng)
+            locationUpdate(defaultLocation)
         }
     }
 
     fun doConfigureMap(m: GoogleMap) {
         map = m
-        locationUpdate(hillfort.lat, hillfort.lng)
+        locationUpdate(hillfort.location)
     }
 
     // update the location and instruct the view to update the view controls
-    fun locationUpdate(lat: Double, lng: Double) {
-        hillfort.lat = lat
-        hillfort.lng = lng
-        hillfort.zoom = 15f
+    fun locationUpdate(location: Location) {
+        hillfort.location = location
+        hillfort.location.zoom = 15f
         map?.clear()
         map?.uiSettings?.setZoomControlsEnabled(true)
         val options =
-            MarkerOptions().title(hillfort.title).position(LatLng(hillfort.lat, hillfort.lng))
+            MarkerOptions().title(hillfort.title).position(LatLng(hillfort.location.lat, hillfort.location.lng))
         map?.addMarker(options)
         map?.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
-                LatLng(hillfort.lat, hillfort.lng),
-                hillfort.zoom
+                LatLng(hillfort.location.lat, hillfort.location.lng),
+                hillfort.location.zoom
             )
         )
         view?.showHillfort(hillfort)
@@ -104,13 +105,16 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     fun doAddOrSave(title: String, description: String) {
         hillfort.title = title
         hillfort.description = description
-        if (edit) {
-            app.hillforts.update(hillfort)
-        } else {
-            app.hillforts.create(hillfort)
+        doAsync {
+            if (edit) {
+                app.hillforts.update(hillfort)
+            } else {
+                app.hillforts.create(hillfort)
+            }
+            uiThread {
+                view?.finish()
+            }
         }
-        // finish the activity
-        view?.finish()
     }
 
     fun doCancel() {
@@ -136,7 +140,7 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
             VIEW.LOCATION,
             LOCATION_REQUEST,
             "location",
-            Location(hillfort.lat, hillfort.lng, hillfort.zoom)
+            Location(hillfort.location.lat, hillfort.location.lng, hillfort.location.zoom)
         )
 
     }
@@ -151,10 +155,8 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
             LOCATION_REQUEST -> {
                 // when a result is returned, recover the location
                 val location = data.extras?.getParcelable<Location>("location")!!
-                hillfort.lat = location.lat
-                hillfort.lng = location.lng
-                hillfort.zoom = location.zoom
-                locationUpdate(hillfort.lat, hillfort.lng)
+                hillfort.location = location
+                locationUpdate(location)
             }
         }
     }

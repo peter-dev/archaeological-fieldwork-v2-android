@@ -12,41 +12,42 @@ import org.wit.hillfort.views.BaseView
 
 class EditLocationPresenter(view: BaseView) : BasePresenter(view) {
 
-  var location = Location()
+    var location = Location()
 
-  init {
-    location = view.intent.extras?.getParcelable<Location>("location")!!
-  }
+    init {
+        location = view.intent.extras?.getParcelable<Location>("location")!!
+    }
 
-  // display a hillfort location on the map
-  fun doConfigureMap(map: GoogleMap) {
-    val loc = LatLng(location.lat, location.lng)
-    val options = MarkerOptions()
-      .title("Hillfort")
-      .snippet("GPS : " + loc.toString())
-      .draggable(true)
-      .position(loc)
-    map.addMarker(options)
-    map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
-  }
+    // display a hillfort location on the map
+    fun doConfigureMap(map: GoogleMap) {
+        val loc = LatLng(location.lat, location.lng)
+        val options = MarkerOptions()
+            .title("Hillfort")
+            .snippet("GPS : " + loc.toString())
+            .draggable(true)
+            .position(loc)
+        map.addMarker(options)
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
+        view?.showLocation(Location(loc.latitude, loc.longitude))
+    }
 
-  // update location reference
-  fun doUpdateLocation(lat: Double, lng: Double) {
-    location.lat = lat
-    location.lng = lng
-  }
+    // update location reference
+    fun doUpdateLocation(loc: Location) {
+        location.lat = loc.lat
+        location.lng = loc.lng
+    }
 
-  // save current location and finish activity
-  fun doSave() {
-    val resultIntent = Intent()
-    resultIntent.putExtra("location", location)
-    view?.setResult(0, resultIntent)
-    view?.finish()
-  }
+    // save current location and finish activity
+    fun doSave() {
+        val resultIntent = Intent()
+        resultIntent.putExtra("location", location)
+        view?.setResult(0, resultIntent)
+        view?.finish()
+    }
 
-  // display a text snippet above a clicked marker
-  fun doUpdateMarker(marker: Marker) {
-    val loc = LatLng(location.lat, location.lng)
-    marker.setSnippet("GPS : " + loc.toString())
-  }
+    // display a text snippet above a clicked marker
+    fun doUpdateMarker(marker: Marker) {
+        val loc = LatLng(location.lat, location.lng)
+        marker.setSnippet("GPS : " + loc.toString())
+    }
 }

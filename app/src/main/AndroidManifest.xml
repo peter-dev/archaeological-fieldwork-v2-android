@@ -36,7 +36,7 @@
 
         <activity
             android:name=".views.editlocation.EditLocationView"
-            android:label="@string/title_activity_hillfort_maps">
+            android:label="@string/title_activity_edit_location">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".views.hillfort.HillfortView" />

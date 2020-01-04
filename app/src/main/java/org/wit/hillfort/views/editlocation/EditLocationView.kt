@@ -7,85 +7,90 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import kotlinx.android.synthetic.main.activity_edit_location.*
 import org.wit.hillfort.R
+import org.wit.hillfort.models.Location
 import org.wit.hillfort.views.BaseView
 
-class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener, GoogleMap.OnMarkerClickListener {
+class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener,
+    GoogleMap.OnMarkerClickListener {
 
-  lateinit var presenter: EditLocationPresenter
+    lateinit var presenter: EditLocationPresenter
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_edit_location)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit_location)
 
-    init(toolbar, false)
-    presenter = initPresenter(EditLocationPresenter(this)) as EditLocationPresenter
+        init(toolbar, false)
+        presenter = initPresenter(EditLocationPresenter(this)) as EditLocationPresenter
 
-    mapView.onCreate(savedInstanceState);
-    mapView.getMapAsync {
-      it.setOnMarkerDragListener(this)
-      it.setOnMarkerClickListener(this)
-      presenter.doConfigureMap(it)
+        mapView.onCreate(savedInstanceState);
+        mapView.getMapAsync {
+            it.setOnMarkerDragListener(this)
+            it.setOnMarkerClickListener(this)
+            presenter.doConfigureMap(it)
+        }
+
+        // retrieve location from the model and update view controls
+        showLocation(Location(presenter.location.lat, presenter.location.lng))
     }
 
-    // retrieve location from the model and update view controls
-    txt_lat.setText("%.6f".format(presenter.location.lat))
-    txt_lng.setText("%.6f".format(presenter.location.lng))
-  }
-
-  // load the menu resource
-  override fun onCreateOptionsMenu(menu: Menu): Boolean {
-    menuInflater.inflate(R.menu.menu_edit_location, menu)
-    return super.onCreateOptionsMenu(menu)
-  }
-
-  // the menu event handler
-  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-    when (item?.itemId) {
-      R.id.item_save -> {
-        presenter.doSave()
-      }
+    // load the menu resource
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_edit_location, menu)
+        return super.onCreateOptionsMenu(menu)
     }
-    return super.onOptionsItemSelected(item)
-  }
 
-  override fun onMarkerDragStart(marker: Marker) {}
+    // the menu event handler
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.item_save -> {
+                presenter.doSave()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
-  override fun onMarkerDrag(marker: Marker) {
-    txt_lat.setText("%.6f".format(marker.position.latitude))
-    txt_lng.setText("%.6f".format(marker.position.longitude))
-  }
+    override fun showLocation(location : Location) {
+        txt_lat.setText("%.6f".format(location.lat))
+        txt_lng.setText("%.6f".format(location.lng))
+    }
 
-  override fun onMarkerDragEnd(marker: Marker) {
-    presenter.doUpdateLocation(marker.position.latitude, marker.position.longitude)
-  }
+    override fun onMarkerDragStart(marker: Marker) {}
 
-  override fun onMarkerClick(marker: Marker): Boolean {
-    presenter.doUpdateMarker(marker)
-    return false
-  }
+    override fun onMarkerDrag(marker: Marker) {
+        showLocation(Location(marker.position.latitude, marker.position.longitude))
+    }
 
-  override fun onDestroy() {
-    super.onDestroy()
-    mapView.onDestroy()
-  }
+    override fun onMarkerDragEnd(marker: Marker) {
+        presenter.doUpdateLocation(Location(marker.position.latitude, marker.position.longitude))
+    }
 
-  override fun onLowMemory() {
-    super.onLowMemory()
-    mapView.onLowMemory()
-  }
+    override fun onMarkerClick(marker: Marker): Boolean {
+        presenter.doUpdateMarker(marker)
+        return false
+    }
 
-  override fun onPause() {
-    super.onPause()
-    mapView.onPause()
-  }
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
 
-  override fun onResume() {
-    super.onResume()
-    mapView.onResume()
-  }
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
 
-  override fun onSaveInstanceState(outState: Bundle) {
-    super.onSaveInstanceState(outState)
-    mapView.onSaveInstanceState(outState)
-  }
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
 }

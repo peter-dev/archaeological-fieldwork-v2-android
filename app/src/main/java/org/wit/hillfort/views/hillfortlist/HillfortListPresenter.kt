@@ -1,5 +1,7 @@
 package org.wit.hillfort.views.hillfortlist
 
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.views.BasePresenter
 import org.wit.hillfort.views.BaseView
@@ -21,6 +23,11 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     fun loadHillforts() {
-        view?.showHillforts(app.hillforts.findAll())
+        doAsync {
+            val hillforts = app.hillforts.findAll()
+            uiThread {
+                view?.showHillforts(hillforts)
+            }
+        }
     }
 }
