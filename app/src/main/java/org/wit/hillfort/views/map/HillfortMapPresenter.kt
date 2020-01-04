@@ -11,7 +11,7 @@ import org.wit.hillfort.views.BaseView
 
 class HillfortMapPresenter(view: BaseView) : BasePresenter(view) {
 
-
+    // display a collection of hillfort items on the map
     fun doPopulateMap(map: GoogleMap, hillforts: List<HillfortModel>) {
         map.uiSettings.setZoomControlsEnabled(true)
         hillforts.forEach {
@@ -19,11 +19,13 @@ class HillfortMapPresenter(view: BaseView) : BasePresenter(view) {
             val options = MarkerOptions()
                 .title(it.title)
                 .position(loc)
+            // keeps reference to hillfort id
             map.addMarker(options).tag = it.id
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
         }
     }
 
+    // get single hillfort by id and update the view controls
     fun doMarkerSelected(marker: Marker) {
         val tag = marker.tag as Long
         val hillfort = app.hillforts.findById(tag)
@@ -31,7 +33,8 @@ class HillfortMapPresenter(view: BaseView) : BasePresenter(view) {
 
     }
 
-    fun loadPlacemarks() {
+    // fetch all hillforts from the store and update the view
+    fun loadHillforts() {
         view?.showHillforts(app.hillforts.findAll())
     }
 }

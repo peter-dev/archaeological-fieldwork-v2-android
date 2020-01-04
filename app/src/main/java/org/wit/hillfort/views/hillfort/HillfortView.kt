@@ -21,11 +21,15 @@ class HillfortView : BaseView(), AnkoLogger {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort)
 
-        init(toolbar)
+        init(toolbar, true)
         presenter = initPresenter(HillfortPresenter(this)) as HillfortPresenter
 
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync {
+            presenter.doConfigureMap(it)
+            it.setOnMapClickListener { presenter.doSetLocation() }
+        }
         btn_chooseImage.setOnClickListener { presenter.doSelectImage() }
-        btn_hillfortLocation.setOnClickListener { presenter.doSetLocation() }
     }
 
     override fun showHillfort(hillfort: HillfortModel) {
@@ -47,6 +51,7 @@ class HillfortView : BaseView(), AnkoLogger {
         return super.onCreateOptionsMenu(menu)
     }
 
+    // the menu event handler
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.item_delete -> {
@@ -72,6 +77,32 @@ class HillfortView : BaseView(), AnkoLogger {
 
     override fun onBackPressed() {
         presenter.doCancel()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView.onDestroy()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mapView.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+        presenter.doRestartLocationUpdates()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 }
 

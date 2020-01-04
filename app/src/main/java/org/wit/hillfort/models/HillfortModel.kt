@@ -2,7 +2,6 @@ package org.wit.hillfort.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.time.LocalDateTime
 
 @Parcelize
 data class Location(
@@ -19,6 +18,7 @@ data class HillfortModel(
     var image: String = "",
     var visited: Boolean = false,
     var dateVisited: String = "",
+    var rating: Short = 0,
     var notes: String = "",
     var lat: Double = 0.0,
     var lng: Double = 0.0,

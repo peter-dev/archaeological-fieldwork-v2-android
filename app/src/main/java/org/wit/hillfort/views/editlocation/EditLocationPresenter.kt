@@ -1,6 +1,5 @@
 package org.wit.hillfort.views.editlocation
 
-import android.app.Activity
 import android.content.Intent
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -19,6 +18,7 @@ class EditLocationPresenter(view: BaseView) : BasePresenter(view) {
     location = view.intent.extras?.getParcelable<Location>("location")!!
   }
 
+  // display a hillfort location on the map
   fun doConfigureMap(map: GoogleMap) {
     val loc = LatLng(location.lat, location.lng)
     val options = MarkerOptions()
@@ -30,11 +30,13 @@ class EditLocationPresenter(view: BaseView) : BasePresenter(view) {
     map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, location.zoom))
   }
 
+  // update location reference
   fun doUpdateLocation(lat: Double, lng: Double) {
     location.lat = lat
     location.lng = lng
   }
 
+  // save current location and finish activity
   fun doSave() {
     val resultIntent = Intent()
     resultIntent.putExtra("location", location)
@@ -42,6 +44,7 @@ class EditLocationPresenter(view: BaseView) : BasePresenter(view) {
     view?.finish()
   }
 
+  // display a text snippet above a clicked marker
   fun doUpdateMarker(marker: Marker) {
     val loc = LatLng(location.lat, location.lng)
     marker.setSnippet("GPS : " + loc.toString())

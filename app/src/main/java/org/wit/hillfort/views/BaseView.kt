@@ -46,9 +46,10 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
     }
 
     // shared initialisation of the toolbar
-    fun init(toolbar: Toolbar) {
+    fun init(toolbar: Toolbar, upEnabled: Boolean) {
         toolbar.title = title
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(upEnabled)
     }
 
     // this lifecycle event is called before the activity is destroyed

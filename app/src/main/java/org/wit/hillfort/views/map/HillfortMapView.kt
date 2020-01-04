@@ -3,12 +3,12 @@ package org.wit.hillfort.views.map
 import android.os.Bundle
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
-import org.wit.hillfort.R
 import kotlinx.android.synthetic.main.activity_hillfort_map.*
 import kotlinx.android.synthetic.main.content_hillfort_maps.*
-import org.wit.hillfort.views.BaseView
+import org.wit.hillfort.R
 import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.models.HillfortModel
+import org.wit.hillfort.views.BaseView
 
 class HillfortMapView : BaseView(), GoogleMap.OnMarkerClickListener {
 
@@ -19,14 +19,14 @@ class HillfortMapView : BaseView(), GoogleMap.OnMarkerClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort_map)
 
-        init(toolbar)
+        init(toolbar, true)
         presenter = initPresenter(HillfortMapPresenter(this)) as HillfortMapPresenter
 
         mapView.onCreate(savedInstanceState);
         mapView.getMapAsync {
             map = it
             map.setOnMarkerClickListener(this)
-            presenter.loadPlacemarks()
+            presenter.loadHillforts()
         }
     }
 

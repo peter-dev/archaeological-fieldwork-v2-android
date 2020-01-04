@@ -6,6 +6,9 @@
     <string name="menu_delete_hillfort">Delete</string>
     <string name="menu_cancel_hillfort">Cancel</string>
     <string name="title_activity_login"> Signup / Login to Hillforts</string>
+    <string name="title_activity_hillfort_list">Hillforts</string>
+    <string name="title_activity_hillfort">Hillfort</string>
+    <string name="title_activity_edit_location">Hillfort</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_hillfort_maps">Map of All Hillforts</string>
     <string name="select_hillfort_image">Select Hillfort Image</string>
