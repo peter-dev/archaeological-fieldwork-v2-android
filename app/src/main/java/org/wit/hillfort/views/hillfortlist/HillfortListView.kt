@@ -22,7 +22,7 @@ class HillfortListView :  BaseView(), HillfortListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hillfort_list)
 
-        init(toolbar, false)
+        init(toolbar, false, true)
         presenter = initPresenter(HillfortListPresenter(this)) as HillfortListPresenter
 
         val layoutManager = LinearLayoutManager(this)

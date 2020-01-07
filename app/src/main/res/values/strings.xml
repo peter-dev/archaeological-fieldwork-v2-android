@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Hillfort</string>
     <string name="menu_logout">Logout</string>
+    <string name="menu_settings">Settings</string>
     <string name="menu_add_hillfort">Add</string>
     <string name="menu_save_hillfort">Save</string>
     <string name="menu_delete_hillfort">Delete</string>

@@ -19,7 +19,7 @@ class EditLocationView : BaseView(), GoogleMap.OnMarkerDragListener,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_location)
 
-        init(toolbar, false)
+        init(toolbar, false, false)
         presenter = initPresenter(EditLocationPresenter(this)) as EditLocationPresenter
 
         mapView.onCreate(savedInstanceState);

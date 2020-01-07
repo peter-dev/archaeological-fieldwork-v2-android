@@ -21,21 +21,17 @@ class HillfortMapPresenter(view: BaseView) : BasePresenter(view) {
             val options = MarkerOptions()
                 .title(it.title)
                 .position(loc)
-            // keeps reference to hillfort id
-            map.addMarker(options).tag = it.id
+            // keeps reference to hillfort object
+            map.addMarker(options).tag = it
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.location.zoom))
         }
     }
 
     // get single hillfort by id and update the view controls
     fun doMarkerSelected(marker: Marker) {
-        val tag = marker.tag as Long
-        doAsync {
-            val hillfort = app.hillforts.findById(tag)
-            uiThread {
-                if (hillfort != null) view?.showHillfort(hillfort)
-            }
-        }
+        val hillfort = marker.tag as HillfortModel
+        if (hillfort != null) view?.showHillfort(hillfort)
+
     }
 
     // fetch all hillforts from the store and update the view

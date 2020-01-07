@@ -12,7 +12,7 @@ interface HillfortDao {
     @Query("SELECT * FROM HillfortModel")
     fun findAll(): List<HillfortModel>
 
-    @Query("select * from HillfortModel where id = :id")
+    @Query("SELECT * from HillfortModel WHERE id = :id")
     fun findById(id: Long): HillfortModel
 
     @Update
@@ -20,4 +20,7 @@ interface HillfortDao {
 
     @Delete
     fun deleteHillfort(hillfort: HillfortModel)
+
+    @Query("DELETE FROM HillfortModel")
+    fun deleteAll()
 }

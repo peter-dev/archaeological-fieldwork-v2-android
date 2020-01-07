@@ -1,5 +1,6 @@
 package org.wit.hillfort.views.hillfortlist
 
+import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import org.wit.hillfort.models.HillfortModel
@@ -10,6 +11,7 @@ import org.wit.hillfort.views.VIEW
 class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
     fun doLogout() {
+        FirebaseAuth.getInstance().signOut()
         view?.navigateTo(VIEW.LOGIN)
         // dismiss the activity
         view?.finish()

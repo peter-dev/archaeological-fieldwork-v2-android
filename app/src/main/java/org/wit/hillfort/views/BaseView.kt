@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Parcelable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.firebase.auth.FirebaseAuth
 import org.jetbrains.anko.AnkoLogger
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
@@ -49,10 +50,14 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
     }
 
     // shared initialisation of the toolbar
-    fun init(toolbar: Toolbar, upEnabled: Boolean) {
+    fun init(toolbar: Toolbar, upEnabled: Boolean, showUser: Boolean) {
         toolbar.title = title
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(upEnabled)
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null && showUser) {
+            toolbar.title = "ID: ${user.email}"
+        }
     }
 
     // this lifecycle event is called before the activity is destroyed
