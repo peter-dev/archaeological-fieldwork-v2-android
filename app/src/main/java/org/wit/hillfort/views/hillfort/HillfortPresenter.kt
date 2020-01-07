@@ -19,6 +19,7 @@ import org.wit.hillfort.helpers.showImagePicker
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.models.Location
 import org.wit.hillfort.views.*
+import java.time.LocalDate
 
 class HillfortPresenter(view: BaseView) : BasePresenter(view) {
 
@@ -102,10 +103,10 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     // persist hillfort into the data store
-    fun doAddOrSave(title: String, description: String, rating: Float) {
+    fun doAddOrSave(title: String, description: String) {
         hillfort.title = title
         hillfort.description = description
-        hillfort.rating = rating
+
         doAsync {
             if (edit) {
                 app.hillforts.update(hillfort)
@@ -116,6 +117,19 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
                 view?.finish()
             }
         }
+    }
+
+    fun doSetDateVisited(isSelected: Boolean) {
+        if (isSelected) {
+            hillfort.dateVisited = LocalDate.now().toString()
+        } else {
+            hillfort.dateVisited = "Not Visited"
+        }
+        hillfort.visited = isSelected
+    }
+
+    fun doSetRating(rating: Float) {
+        hillfort.rating = rating
     }
 
     fun doCancel() {

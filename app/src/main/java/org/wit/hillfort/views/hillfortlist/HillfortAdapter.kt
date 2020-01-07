@@ -42,6 +42,8 @@ class HillfortAdapter constructor(
         fun bind(hillfort: HillfortModel, listener: HillfortListener) {
             itemView.txt_hillfortTitle.text = hillfort.title
             itemView.txt_hillfortDescription.text = hillfort.description
+            itemView.chkbox_visited.isChecked = hillfort.visited
+            itemView.txt_visited.text = hillfort.dateVisited
             itemView.icon_hillfortImage.setImageBitmap(
                 readImageFromPath(
                     itemView.context,

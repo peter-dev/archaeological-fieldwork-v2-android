@@ -12,10 +12,10 @@ import org.wit.hillfort.helpers.readImageFromPath
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.views.BaseView
 
+
 class HillfortView : BaseView(), AnkoLogger {
 
     lateinit var presenter: HillfortPresenter
-    //var hillfort = HillfortModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +30,17 @@ class HillfortView : BaseView(), AnkoLogger {
             it.setOnMapClickListener { presenter.doSetLocation() }
         }
         btn_chooseImage.setOnClickListener { presenter.doSelectImage() }
+        chkbox_visited.setOnClickListener { presenter.doSetDateVisited(chkbox_visited.isChecked) }
+        rate_hillfort.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            presenter.doSetRating(rating)
+        }
     }
 
     override fun showHillfort(hillfort: HillfortModel) {
         txt_hillfortTitle.setText(hillfort.title)
         txt_hillfortDescription.setText(hillfort.description)
         rate_hillfort.rating = hillfort.rating
+        chkbox_visited.isChecked = hillfort.visited
         // load image from image path
         img_hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
         // when image it detected, change the label (change image)
@@ -62,7 +67,10 @@ class HillfortView : BaseView(), AnkoLogger {
                 if (txt_hillfortTitle.text.toString().isEmpty()) {
                     toast(R.string.toast_enter_hillford_title)
                 } else {
-                    presenter.doAddOrSave(txt_hillfortTitle.text.toString(), txt_hillfortDescription.text.toString(), rate_hillfort.rating)
+                    presenter.doAddOrSave(
+                        txt_hillfortTitle.text.toString(),
+                        txt_hillfortDescription.text.toString()
+                    )
                 }
             }
         }

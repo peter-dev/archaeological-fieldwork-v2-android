@@ -34,5 +34,20 @@
             android:layout_below="@id/txt_hillfortTitle"
             android:layout_toEndOf="@+id/icon_hillfortImage"/>
 
+        <CheckBox
+            android:id="@+id/chkbox_visited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="Visited"
+            android:clickable="false"/>
+
+        <TextView
+            android:id="@+id/txt_visited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/chkbox_visited" />
+
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
