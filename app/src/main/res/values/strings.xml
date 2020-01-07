@@ -6,7 +6,7 @@
     <string name="menu_delete_hillfort">Delete</string>
     <string name="menu_cancel_hillfort">Cancel</string>
     <string name="menu_search_hillfort">Search</string>
-    <string name="title_activity_login"> Signup / Login to Hillforts</string>
+    <string name="title_activity_login">* Welcome to Hillfort Mobile Application *</string>
     <string name="title_activity_hillfort_list">Hillforts</string>
     <string name="title_activity_hillfort">Hillfort</string>
     <string name="title_activity_edit_location">Hillfort</string>
@@ -16,11 +16,19 @@
     <string name="change_hillfort_image">Change Hillfort Image</string>
     <string name="button_add_image">Add Image</string>
     <string name="button_set_location">Set Location</string>
+    <string name="button_signup">Signup</string>
+    <string name="button_login">Login</string>
     <string name="hint_hillfort_image">Hillfort Image</string>
     <string name="hint_hillfort_title">Hillfort Title</string>
     <string name="hint_hillfort_description">Hillfort Description</string>
     <string name="hint_hillfort_search">Type name...</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
     <string name="toast_enter_hillford_title">Please enter a Hillfort Title</string>
-
+    <string name="toast_enterLoginDetails">Please enter a valid Email and Password</string>
+    <string name="toast_InvalidEmail">Please enter a valid Email address</string>
+    <string name="toast_InvalidPassword">Invalid Password, Please try again</string>
+    <string name="toast_UserSingedUp">Registration successful</string>
+    <string name="toast_UserLoggedIn">Login successful</string>
 
 </resources>

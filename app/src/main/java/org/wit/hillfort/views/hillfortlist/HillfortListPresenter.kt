@@ -9,6 +9,12 @@ import org.wit.hillfort.views.VIEW
 
 class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
 
+    fun doLogout() {
+        view?.navigateTo(VIEW.LOGIN)
+        // dismiss the activity
+        view?.finish()
+    }
+
     fun doAddHillfort() {
         view?.navigateTo(VIEW.HILLFORT)
 
