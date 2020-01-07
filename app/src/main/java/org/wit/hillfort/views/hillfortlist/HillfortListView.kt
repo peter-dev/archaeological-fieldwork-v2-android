@@ -1,14 +1,18 @@
 package org.wit.hillfort.views.hillfortlist
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_hillfort_list.*
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
 import org.wit.hillfort.views.BaseView
+
 
 class HillfortListView :  BaseView(), HillfortListener {
 
@@ -35,6 +39,27 @@ class HillfortListView :  BaseView(), HillfortListener {
     // load the menu resource
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        // associate searchable configuration with the SearchView
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = menu!!.findItem(R.id.item_search).actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()))
+        searchView.setMaxWidth(Integer.MAX_VALUE)
+        // listening to search query text change
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                // filter recycler view when query submitted
+                presenter.loadRingfortsSearch(query)
+                return true
+            }
+
+            override fun onQueryTextChange(query: String): Boolean {
+                // filter recycler view when text is changed
+                presenter.loadRingfortsSearch(query)
+                return true
+            }
+        })
+
         return super.onCreateOptionsMenu(menu)
     }
 

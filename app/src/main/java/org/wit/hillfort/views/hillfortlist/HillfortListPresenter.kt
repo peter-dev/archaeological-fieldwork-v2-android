@@ -30,4 +30,14 @@ class HillfortListPresenter(view: BaseView) : BasePresenter(view) {
             }
         }
     }
+
+    fun loadRingfortsSearch(containingString: String) {
+        doAsync {
+            val hillforts = app.hillforts.findAll()
+            val filtered = hillforts.filter { it.title.toLowerCase().contains(containingString.toLowerCase()) }
+            uiThread {
+                view?.showHillforts(filtered)
+            }
+        }
+    }
 }
