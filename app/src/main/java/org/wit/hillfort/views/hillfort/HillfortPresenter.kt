@@ -102,9 +102,10 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     // persist hillfort into the data store
-    fun doAddOrSave(title: String, description: String) {
+    fun doAddOrSave(title: String, description: String, rating: Float) {
         hillfort.title = title
         hillfort.description = description
+        hillfort.rating = rating
         doAsync {
             if (edit) {
                 app.hillforts.update(hillfort)

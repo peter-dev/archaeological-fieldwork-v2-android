@@ -22,6 +22,6 @@ data class HillfortModel(
     var image: String = "",
     var visited: Boolean = false,
     var dateVisited: String = "",
-    var rating: Short = 0,
+    var rating: Float = 0f,
     var notes: String = "",
     @Embedded var location : Location = Location()): Parcelable

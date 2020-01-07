@@ -35,6 +35,7 @@ class HillfortView : BaseView(), AnkoLogger {
     override fun showHillfort(hillfort: HillfortModel) {
         txt_hillfortTitle.setText(hillfort.title)
         txt_hillfortDescription.setText(hillfort.description)
+        rate_hillfort.rating = hillfort.rating
         // load image from image path
         img_hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
         // when image it detected, change the label (change image)
@@ -61,7 +62,7 @@ class HillfortView : BaseView(), AnkoLogger {
                 if (txt_hillfortTitle.text.toString().isEmpty()) {
                     toast(R.string.toast_enter_hillford_title)
                 } else {
-                    presenter.doAddOrSave(txt_hillfortTitle.text.toString(), txt_hillfortDescription.text.toString())
+                    presenter.doAddOrSave(txt_hillfortTitle.text.toString(), txt_hillfortDescription.text.toString(), rate_hillfort.rating)
                 }
             }
         }
