@@ -68,7 +68,8 @@ class HillfortListView :  BaseView(), HillfortListener {
         when (item?.itemId) {
             R.id.item_add -> presenter.doAddHillfort()
             R.id.item_map -> presenter.doShowHillfortsMap()
-            R.id.item_logout ->presenter.doLogout()
+            R.id.item_logout -> presenter.doLogout()
+            R.id.item_settings -> presenter.doShowUserSettings()
         }
         return super.onOptionsItemSelected(item)
     }

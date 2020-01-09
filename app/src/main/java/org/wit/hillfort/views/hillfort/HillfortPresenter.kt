@@ -138,9 +138,13 @@ class HillfortPresenter(view: BaseView) : BasePresenter(view) {
     }
 
     fun doDelete() {
-        app.hillforts.delete(hillfort)
-        // finish the activity
-        view?.finish()
+        doAsync {
+            app.hillforts.delete(hillfort)
+            uiThread {
+                // finish the activity
+                view?.finish()
+            }
+        }
     }
 
     fun doSelectImage() {

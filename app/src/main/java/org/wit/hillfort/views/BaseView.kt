@@ -14,13 +14,14 @@ import org.wit.hillfort.views.hillfort.HillfortView
 import org.wit.hillfort.views.hillfortlist.HillfortListView
 import org.wit.hillfort.views.login.LoginView
 import org.wit.hillfort.views.map.HillfortMapView
+import org.wit.hillfort.views.settings.SettingsView
 
 
 val IMAGE_REQUEST = 1
 val LOCATION_REQUEST = 2
 
 enum class VIEW {
-    HILLFORT, LIST, MAPS, LOCATION, LOGIN
+    HILLFORT, LIST, MAPS, LOCATION, LOGIN, SETTINGS
 }
 
 abstract class BaseView : AppCompatActivity(), AnkoLogger {
@@ -36,6 +37,7 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
             VIEW.LOCATION -> intent = Intent(this, EditLocationView::class.java)
             VIEW.MAPS -> intent = Intent(this, HillfortMapView::class.java)
             VIEW.LOGIN -> intent = Intent(this, LoginView::class.java)
+            VIEW.SETTINGS -> intent = Intent(this, SettingsView::class.java)
         }
         if (key != "") {
             intent.putExtra(key, value)
@@ -86,6 +88,7 @@ abstract class BaseView : AppCompatActivity(), AnkoLogger {
     open fun showHillfort(hillfort: HillfortModel) {}
     open fun showHillforts(hillforts: List<HillfortModel>) {}
     open fun showLocation(location : Location) {}
+    open fun showUser(userEmail: String, totalHillforts: Int, visitedHillforts: Int) {}
     open fun showProgress() {}
     open fun hideProgress() {}
 }

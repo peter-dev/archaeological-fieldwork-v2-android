@@ -10,6 +10,7 @@
     <string name="title_activity_login">* Welcome to Hillfort Mobile Application *</string>
     <string name="title_activity_hillfort_list">Hillforts</string>
     <string name="title_activity_hillfort">Hillfort</string>
+    <string name="title_activity_settings">User Settings</string>
     <string name="title_activity_edit_location">Hillfort</string>
     <string name="title_activity_map">Map</string>
     <string name="title_activity_hillfort_maps">Map of All Hillforts</string>
@@ -25,6 +26,9 @@
     <string name="hint_hillfort_search">Type name...</string>
     <string name="label_email">Email</string>
     <string name="label_password">Password</string>
+    <string name="label_registered_email">Registered Email:</string>
+    <string name="label_total">Total Hillforts:</string>
+    <string name="label_visited">Visited Hillforts:</string>
     <string name="toast_enter_hillford_title">Please enter a Hillfort Title</string>
     <string name="toast_enterLoginDetails">Please enter a valid Email and Password</string>
     <string name="toast_InvalidEmail">Please enter a valid Email address</string>

@@ -22,7 +22,7 @@ class LoginView : BaseView() {
 
         btn_signup.setOnClickListener {
             val email = txt_email.text.toString().trim()
-            val password = txt_password.text.toString().trim()
+            val password = txt_total.text.toString().trim()
             // validate fields
             if (email.isEmpty() || password.isEmpty()) {
                 toast(R.string.toast_enterLoginDetails)
@@ -33,7 +33,7 @@ class LoginView : BaseView() {
 
         btn_login.setOnClickListener {
             val email = txt_email.text.toString()
-            val password = txt_password.text.toString()
+            val password = txt_total.text.toString()
             // validate fields
             if (email.isEmpty() || password.isEmpty()) {
                 toast(R.string.toast_enterLoginDetails)
