@@ -7,7 +7,7 @@
     <string name="menu_delete_hillfort">Delete</string>
     <string name="menu_cancel_hillfort">Cancel</string>
     <string name="menu_search_hillfort">Search</string>
-    <string name="title_activity_login">* Welcome to Hillfort Mobile Application *</string>
+    <string name="title_activity_login">Welcome to Hillfort Mobile Application</string>
     <string name="title_activity_hillfort_list">Hillforts</string>
     <string name="title_activity_hillfort">Hillfort</string>
     <string name="title_activity_settings">User Settings</string>

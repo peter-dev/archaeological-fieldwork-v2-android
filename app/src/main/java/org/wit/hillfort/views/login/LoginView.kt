@@ -16,7 +16,10 @@ class LoginView : BaseView() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        // update title text view and disable default title (label)
+        toolbar_title.setText(title)
         init(toolbar, false, false)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
         progressBar.visibility = ProgressBar.INVISIBLE
         presenter = initPresenter(LoginPresenter(this)) as LoginPresenter
 
