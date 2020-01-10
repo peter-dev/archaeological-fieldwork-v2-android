@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_hillfort.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
@@ -41,8 +42,8 @@ class HillfortView : BaseView(), AnkoLogger {
         txt_hillfortDescription.setText(hillfort.description)
         rate_hillfort.rating = hillfort.rating
         chkbox_visited.isChecked = hillfort.visited
-        // load image from image path
-        img_hillfortImage.setImageBitmap(readImageFromPath(this, hillfort.image))
+        // load image from remote storage
+        Glide.with(this).load(hillfort.image).into(img_hillfortImage)
         // when image it detected, change the label (change image)
         if (hillfort.image.isNotEmpty()) {
             btn_chooseImage.setText(R.string.change_hillfort_image)

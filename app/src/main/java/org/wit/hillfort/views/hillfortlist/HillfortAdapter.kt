@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.card_hillfort.view.*
 import org.wit.hillfort.R
 import org.wit.hillfort.models.HillfortModel
@@ -44,12 +45,7 @@ class HillfortAdapter constructor(
             itemView.txt_hillfortDescription.text = hillfort.description
             itemView.chkbox_visited.isChecked = hillfort.visited
             itemView.txt_visited.text = hillfort.dateVisited
-            itemView.icon_hillfortImage.setImageBitmap(
-                readImageFromPath(
-                    itemView.context,
-                    hillfort.image
-                )
-            )
+            Glide.with(itemView.context).load(hillfort.image).into(itemView.icon_hillfortImage)
             itemView.setOnClickListener { listener.onHillfortClick(hillfort) }
         }
     }
